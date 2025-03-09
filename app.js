@@ -94,6 +94,10 @@ const userRouter = require("./routes/user.js");
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 app.use("/", userRouter);
+app.get("/", (req, res) => {
+  res.send("Welcome to HomeX! The server is running.");
+});
+
 
 // 404 Handler
 app.all("*", (req, res, next) => {
