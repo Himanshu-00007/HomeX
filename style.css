@@ -1,0 +1,202 @@
+*{
+    font-family: "Poppins", serif;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.navbar1{
+    display:flex;
+    align-items:center;
+    justify-content: center;
+    margin-right:40px;
+}
+.logo{
+    height:70px;
+    width:auto;
+}
+.stays{
+    margin-left:480.8px;
+    margin-right:35px;
+}
+.experiences{
+    margin-right:255px;
+}
+.home{
+    margin-right:20px;
+    padding:8px;
+}
+.navbar1 i{
+    margin-right:15px;
+}
+.material-icons{
+    height:32.45px;
+} 
+.menu{
+    display:flex;
+    align-items:center;
+    border:rgb(229, 226, 226) double 2px;
+    border-radius:30px;
+    padding-left:10px;
+    height:50px;
+}
+.navbar2{
+    display:flex;
+    width:fit-content;
+    margin:0px auto;
+    align-items: center;
+    /* gap:50px; */
+    border:rgb(229, 226, 226) double 2px;  
+    border-radius:30px;
+    box-shadow: 1px 1px 5px rgb(229, 226, 226);
+    padding:5px;
+}
+.navbar2 div>p{
+    margin:0px;
+    font-size:13px;
+    font-weight: 500;
+}
+.where{
+    padding-left:30px;
+    padding-right:50px;
+}
+.checkin{
+    padding-right:100px;
+}
+.checkout{
+    padding-right:100px;
+}
+.searchlogo{
+    padding-right:30px;
+}
+.who{
+    padding-right:50px;
+}
+.where:hover{
+    background-color: rgb(229, 226, 226);
+    border-radius: 30px;
+}
+.checkin:hover{
+    background-color: rgb(229, 226, 226);
+    border-radius: 20px;
+} 
+.checkout:hover{
+    background-color: rgb(229, 226, 226);
+    border-radius: 20px;
+} 
+.who:hover{
+    background-color: rgb(229, 226, 226);
+    border-radius: 20px;
+} 
+.experiences{
+    padding:8px;
+}
+.experiences:hover{
+    background-color: rgb(229, 226, 226);
+    border-radius: 20px;
+} 
+.home:hover{
+    background-color: rgb(229, 226, 226);
+    border-radius: 20px;
+} 
+.menu:hover{
+    box-shadow: 5px 5px 5px rgb(229, 226, 226);
+} 
+.line{
+    background-color: rgba(229, 226, 226);
+    opacity:0.5;
+    margin-top:25px;
+    margin-bottom:25px;
+
+}
+
+.navbar3 {
+    display: flex;
+    gap:30px;
+    padding-top:20px;
+    margin-left:80px;
+}
+
+.navbar3 > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;  /* Remove gap completely */
+    opacity: 0.6;
+}
+
+.navbar3 .material-icons {
+    font-size: 30px;
+    height: 30px;  /* Make icons consistent size */
+    margin-bottom: 2px;  /* Small consistent space */
+}
+
+.navbar3 p {
+    margin: 0;
+    padding: 0;
+    font-size: 12px;  /* Slightly smaller text */
+    text-align: center;
+    color: #222222;
+    font-weight: bold;
+}
+.filters .btn1{
+    display:flex;
+    padding:10px 20px 10px 20px;
+    border-radius:10px;
+}
+.tax .btn2{
+    display:flex;
+    padding:10px 20px 10px 20px;
+    border-radius:10px;
+}
+.btn1 p{
+    padding-left:10px;
+}
+.btn2 p{
+    padding-right:10px;
+}
+.navbar3 > div:hover{
+    opacity:1;
+}
+.container{
+    display:flex;
+    gap:25px;
+    flex-wrap:wrap;
+    margin-left:80px;
+    margin-right:80px;
+    margin-top:20px;
+}
+.image img {
+    height: 300px;
+    width: 300px;
+    border-radius: 20px;
+}
+.info1>p{
+    margin:0;
+    font-size:15px;
+}
+.location,.price{
+    font-weight:500;
+}
+.navbar1>h4{
+    font-weight:500;
+}
+.home 
+{
+    font-weight:500;
+    text-decoration: none;
+    color:black;
+}
+.navbar0 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: white; /* Add this to ensure content below doesn't show through */
+    z-index: 1000; /* This ensures navbar stays on top of other content */
+}
+
+/* Add padding to the body to prevent content from hiding behind fixed navbar */
+body {
+    padding-top: 170px; /* Adjust this value based on your navbar's height */
+    margin: 0;
+}
