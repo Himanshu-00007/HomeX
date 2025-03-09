@@ -1,6 +1,7 @@
-if(process.env.NODE_ENV !="production"){
-  require('dotenv').config();
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
 }
+
 const express = require("express");
 const app = express();
 const path = require("path");
@@ -9,56 +10,65 @@ const methodOverride = require("method-override");
 const mongoose = require("mongoose");
 const listing = require("./models/listing.js");
 const review = require("./models/review.js");
-const { listingschema, reviewschema} = require("./schema.js");
-const wrapAsync=require("./utils/wrapAsync.js");
-const ExpressError=require("./utils/ExpressError.js");
+const { listingschema, reviewschema } = require("./schema.js");
+const wrapAsync = require("./utils/wrapAsync.js");
+const ExpressError = require("./utils/ExpressError.js");
+
 app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "/public")));
 app.use(methodOverride("_method"));
-const listingRouter=require("./routes/listing.js");
-const reviewRouter=require("./routes/review.js");
-const userRouter=require("./routes/user.js");
-const MongoStore = require('connect-mongo');
-const session=require("express-session");
-const flash=require("connect-flash");
-const passport=require("passport");
-const localStrategy=require("passport-local");
-const User=require("./models/user.js");
-const dburl=process.env.ATLASDB_URL;
-// Connect to MongoDB
-main()
-  .then(() => {
-    console.log("DB is connected");
-  })
-  .catch((err) => {
-    console.log("DB connection error:", err);
-  });
+
+// MongoDB Connection
+const dburl = process.env.ATLASDB_URL || "mongodb://localhost:27017/yourdbname";
 
 async function main() {
-  await mongoose.connect(dburl);
+  try {
+    await mongoose.connect(dburl);
+    console.log("✅ DB is connected");
+  } catch (err) {
+    console.error("❌ DB connection error:", err);
+  }
 }
-const store=MongoStore.create({
-  mongoUrl:dburl,
-  crypto:{
-    secret: process.env.SECRET
+
+main();
+
+// Session & Authentication
+const MongoStore = require("connect-mongo");
+const session = require("express-session");
+const flash = require("connect-flash");
+const passport = require("passport");
+const localStrategy = require("passport-local");
+const User = require("./models/user.js");
+
+// Ensure SECRET exists
+const secret = process.env.SECRET || "fallbacksecret";
+
+const store = MongoStore.create({
+  mongoUrl: dburl,
+  crypto: {
+    secret: secret,
   },
-  touchafter:24*3600,
+  touchAfter: 24 * 3600,
 });
-store.on("error",(err)=>{
-  console.log("ERROR IN MONGO SESSION STORE",err);
+
+store.on("error", (err) => {
+  console.error("❌ ERROR IN MONGO SESSION STORE:", err);
 });
+
 const sessionOptions = {
-  secret: process.env.SECRET,
+  store,
+  secret: secret,
   resave: false,
   saveUninitialized: true,
   cookie: {
-    maxAge: 7 * 24 * 60 * 60 * 1000,  // 7 days in milliseconds
+    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     httpOnly: true,
   },
 };
+
 app.use(session(sessionOptions));
 app.use(flash());
 
@@ -68,17 +78,23 @@ passport.use(new localStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-
-app.use((req,res,next)=>{
-  res.locals.success=req.flash("success");
-  res.locals.error=req.flash("error");
-  res.locals.currUser=req.user;
+// Middleware for flash messages & user info
+app.use((req, res, next) => {
+  res.locals.success = req.flash("success");
+  res.locals.error = req.flash("error");
+  res.locals.currUser = req.user;
   next();
 });
-app.use("/listings",listingRouter);
-app.use("/listings/:id/reviews",reviewRouter);
-app.use("/",userRouter);
-// Reviews
+
+// Routes
+const listingRouter = require("./routes/listing.js");
+const reviewRouter = require("./routes/review.js");
+const userRouter = require("./routes/user.js");
+
+app.use("/listings", listingRouter);
+app.use("/listings/:id/reviews", reviewRouter);
+app.use("/", userRouter);
+
 // 404 Handler
 app.all("*", (req, res, next) => {
   next(new ExpressError("Page Not Found", 404));
@@ -90,7 +106,8 @@ app.use((err, req, res, next) => {
   res.status(statusCode).send(message);
 });
 
-// Start Server
-app.listen(8080, () => {
-  console.log("Server is listening at port 8080");
+// Start Server (Fix: Use `process.env.PORT`)
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {
+  console.log(`🚀 Server is running at port ${PORT}`);
 });
