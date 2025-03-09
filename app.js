@@ -94,8 +94,14 @@ const userRouter = require("./routes/user.js");
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 app.use("/", userRouter);
-app.get("/", (req, res) => {
-  res.send("Welcome to HomeX! The server is running.");
+app.get("/", async (req, res) => {
+  try {
+      const alllistings = await listing.find({}); // Fetch all listings
+      res.render("listings/index", { alllistings }); // Pass 'alllistings' instead of 'listings'
+  } catch (err) {
+      console.error("Error fetching listings:", err);
+      res.status(500).send("Internal Server Error");
+  }
 });
 
 
