@@ -1,0 +1,78 @@
+<% layout("layouts/boilerplate") %>
+<body>
+    <br>
+    <div class="offset-4">
+    <h3>Listing details:</h3> 
+    <div class="card" style="width: 20rem;">
+        <img src="<%=list.image%>" class="card-img-top" alt="...">
+    </div>
+    <ul>
+      <p class="card-text"> owned by <i><%= list.owner.username %></i></p>
+        <li><%=list.title%></li>
+        <li><%=list.description%></li>
+        <li><%=list.price%></li>
+        <li><%=list.country%></li>
+        <li><%=list.location%></li>
+    </ul>
+
+    <% if (currUser && list.owner && currUser._id.toString() === list.owner._id.toString()) { %>
+    <div class="row">
+        <div class="col-8">
+            <div class="d-flex gap-2">  <!-- Added this container with d-flex -->
+                <a href="/listings/<%= list._id %>/edit" class="btn btn-success">Edit this listing</a>
+                <form method="POST" action="/listings/<%= list._id %>?_method=DELETE" class="d-inline">
+                    <button class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+  <%}%>
+    <hr>
+    <form method="POST" action="/listings/<%=list._id%>/reviews" novalidate class="needs-validation">
+      <% if (currUser) { %>
+      <div class="mb-3 mt-3">
+            <h3>Leave a Review</h3>
+            <label for="rating" class="form-label">Rating</label>
+            <input type="range" min="1" max="5" id="rating" name="review[rating]" class="form-range" required>
+            <div class="invalid-feedback">Please provide a valid rating.</div>
+        </div>
+        <div class="mb-3 mt-3">
+            <label for="comments" class="form-label">Comments</label>
+            <textarea id="comments" name="review[comments]" class="form-control" rows="5" cols="10" required></textarea>
+            <div class="invalid-feedback">Please add some comments for review.</div>
+        </div>
+      
+        <button class="btn btn-outline-dark">Submit</button>
+    </form>
+    <%}%>
+    <h5 class="bkwas"><b>All Reviews</b></h5>
+
+    <div class="all-reviews">
+        <% for (review of list.reviews) { %>
+          <div class="card mb-3 review-card" style="width: 21rem; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+            <div class="card-body">
+              <h5 class="card-title" style="font-weight: bold; color: #343a40;">@<%= review.author ? review.author.username : "Anonymous" %></h5> <p class="card-subtitle mb-2 text-muted" style="font-size: smaller;">Verified User</p>
+              <p class="card-text comments" style="color: #555;"><%= review.comments %></p>
+              <div class="d-flex align-items-center">
+              <div class="rating" style="margin-right: 5px;">
+                <% for (let i = 0; i < review.rating; i++) { %>
+                  <i class="fas fa-star" style="color: gold;"></i> 
+                <% } %>
+                <% for (let i = review.rating; i < 5; i++) { %>
+                  <i class="far fa-star" style="color: gold;"></i> 
+                <% } %>
+              </div>
+              <p class="card-text" style="color: #777; font-size: smaller;">(5)</p>
+              </div>
+                </div>
+                <% if (currUser && list.owner && currUser._id.toString() === list.owner._id.toString()) { %>
+
+                 <form method="POST" action="/listings/<%=list._id%>/reviews/<%=review._id%>?_method=DELETE">
+                  <button class="btn btn-dark mb-3 mt-3">Delete</button>
+                 </form>
+                 <%}%>
+          </div>
+        <% } %>
+      </div>
+<br>
+</body>

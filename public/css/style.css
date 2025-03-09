@@ -1,0 +1,96 @@
+body{
+    display:flex;
+    flex-direction: column;
+    min-height:100vh;
+}
+.container{
+    flex:1;
+}
+.navbar{
+    height: 5rem;
+    background-color: white;
+}
+.fa-compass{
+    color:rgb(247, 47, 47);
+    font-size: 2rem;
+}
+.nav-link{
+    font-weight:500 !important;
+}
+.links a{
+    text-decoration: none;
+    color: black;
+}
+.social{
+    width:100%;
+    margin-bottom:5px;
+    margin-top:5px;
+}
+.links{
+    width:100%;
+    margin-bottom:5px;
+}
+.wander{
+    width:100%;
+    margin-bottom:10px;
+}
+.footer{
+    text-align: center;
+    display:flex;
+    justify-content: center;
+    flex-wrap: wrap;background-color: rgb(252, 233, 233);
+}
+.links a:hover{
+    text-decoration: underline;
+}
+.social i{
+    padding-right:8px;
+}
+.listing-card{
+    border:none !important;
+    margin-bottom: 2rem;
+}
+.card-img-top{
+    border-radius:5px;
+    height:20rem !important;
+}
+.card-body{
+    padding:0 !important;
+}
+.anchor{
+    text-decoration: none;
+}
+.card-img-overlay{
+    opacity:0;
+}
+.card-img-overlay:hover{
+    opacity:0.3;
+    background-color: white;
+}
+.all-reviews {
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: center; 
+}
+
+.review-card {
+  margin: 10px; 
+  transition: transform 0.2s; 
+}
+
+.review-card:hover {
+  transform: scale(1.05); 
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+.rating {
+  display: flex;
+}
+.all-reviews {
+    padding: 20px;
+}
+.card-title,.comments{
+    padding:5px 0 0 5px;
+}
+.rating{
+    padding-left:5px;
+}
